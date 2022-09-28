@@ -1,4 +1,4 @@
-/*ÕâÊÇÒ»¸öÄ£°åÄÚ´æÊý¾Ý¿â£¬ÎªÁË¼õÉÙÄÚ´æµÄ¸´ÖÆ£¬¼Ó¿ìÊý¾Ý¶ÁÈ¡¶øÉè¼Æ*/
+/*ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Ä£ï¿½ï¿½ï¿½Ú´ï¿½ï¿½ï¿½ï¿½Ý¿â£¬Îªï¿½Ë¼ï¿½ï¿½ï¿½ï¿½Ú´ï¿½Ä¸ï¿½ï¿½Æ£ï¿½ï¿½Ó¿ï¿½ï¿½ï¿½ï¿½Ý¶ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½*/
 
 #include "tmpl_db.h"
 
@@ -14,11 +14,11 @@ void Tmpl_db::delete_tmpl(int arg_i)
 	if (i >= m_capacity || i < 0) {
 		return;
 	}
-	else if (i == m_capacity - 1L) {//É¾³ý×îºóÒ»¸ötmpl
+	else if (i == m_capacity - 1L) {//É¾ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½tmpl
 		memset(m_data +(m_capacity - 1L) * m_tmpl_size, 0, m_tmpl_size);
 		m_name_vector.erase(std::begin(m_name_vector) += i);
 	}
-	else {//É¾³ýÒ»¸ötmpl£¬È»ºó½«ºóÃæ²¿·ÖÔªËØÇ°ÒÆÒ»¸ñ£¬É¾³ý×îºóÒ»¸ötmpl
+	else {//É¾ï¿½ï¿½Ò»ï¿½ï¿½tmplï¿½ï¿½È»ï¿½ó½«ºï¿½ï¿½æ²¿ï¿½ï¿½Ôªï¿½ï¿½Ç°ï¿½ï¿½Ò»ï¿½ï¿½É¾ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½tmpl
 		memcpy_s(m_data + i * m_tmpl_size,
 			(m_capacity - (i + 1)) * (m_tmpl_size),
 			m_data + (i + 1) * m_tmpl_size,
@@ -30,7 +30,7 @@ void Tmpl_db::delete_tmpl(int arg_i)
 
 void Tmpl_db::clear()
 {
-	memset(m_data,0, m_capacity * m_tmpl_size);
+    memset(m_data,0,(m_capacity - 1L) * m_tmpl_size);
 	m_name_vector.clear();
 }
 
@@ -83,7 +83,7 @@ void Tmpl_db::resize() {
 		m_data = new unsigned char[m_tmpl_size * 1]{};
 		m_capacity = 1;
 	}
-	else {//À©´óÄÚ´æ£¬Ô­ÄÚ´æ¸´ÖÆµ½ÐÂÄÚ´æ
+	else {//ï¿½ï¿½ï¿½ï¿½ï¿½Ú´æ£¬Ô­ï¿½Ú´æ¸´ï¿½Æµï¿½ï¿½ï¿½ï¿½Ú´ï¿½
 		unsigned char* new_data = new unsigned char[m_tmpl_size * m_capacity * 2L]{};
 		memset(new_data, 0, m_tmpl_size * m_capacity * 2L);
 		memcpy_s(new_data, m_tmpl_size * static_cast<long long>(m_name_vector.size()), m_data, m_tmpl_size * static_cast<long long>(m_name_vector.size()));
