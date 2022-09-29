@@ -1,6 +1,6 @@
-/*����һ��ģ���ڴ����ݿ⣬Ϊ�˼����ڴ�ĸ��ƣ��ӿ����ݶ�ȡ�����*/
+/*这是一个模板内存数据库，为了减少内存的复制，加快数据读取而设计*/
 
-#include "tmpl_db.h"
+#include "inner_tmpl_db.h"
 
 int Tmpl_db::get_size()
 {
@@ -14,11 +14,11 @@ void Tmpl_db::delete_tmpl(int arg_i)
 	if (i >= m_capacity || i < 0) {
 		return;
 	}
-	else if (i == m_capacity - 1L) {//ɾ�����һ��tmpl
+	else if (i == m_capacity - 1L) {//删除最后一个tmpl
 		memset(m_data +(m_capacity - 1L) * m_tmpl_size, 0, m_tmpl_size);
 		m_name_vector.erase(std::begin(m_name_vector) += i);
 	}
-	else {//ɾ��һ��tmpl��Ȼ�󽫺��沿��Ԫ��ǰ��һ��ɾ�����һ��tmpl
+	else {//删除一个tmpl，然后将后面部分元素前移一格，删除最后一个tmpl
 		memcpy_s(m_data + i * m_tmpl_size,
 			(m_capacity - (i + 1)) * (m_tmpl_size),
 			m_data + (i + 1) * m_tmpl_size,
@@ -30,7 +30,7 @@ void Tmpl_db::delete_tmpl(int arg_i)
 
 void Tmpl_db::clear()
 {
-    memset(m_data,0,(m_capacity - 1L) * m_tmpl_size);
+	memset(m_data, 0, (m_capacity) * m_tmpl_size);
 	m_name_vector.clear();
 }
 
@@ -83,7 +83,7 @@ void Tmpl_db::resize() {
 		m_data = new unsigned char[m_tmpl_size * 1]{};
 		m_capacity = 1;
 	}
-	else {//�����ڴ棬ԭ�ڴ渴�Ƶ����ڴ�
+	else {//扩大内存，原内存复制到新内存
 		unsigned char* new_data = new unsigned char[m_tmpl_size * m_capacity * 2L]{};
 		memset(new_data, 0, m_tmpl_size * m_capacity * 2L);
 		memcpy_s(new_data, m_tmpl_size * static_cast<long long>(m_name_vector.size()), m_data, m_tmpl_size * static_cast<long long>(m_name_vector.size()));
